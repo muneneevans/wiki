@@ -14,5 +14,6 @@ public class page_file {
     public int page_id ; 
     public int file_id ; 
     public int version_number ;
+    public int user_id ;
     
 }

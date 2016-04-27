@@ -109,15 +109,9 @@ public class NewPage extends javax.swing.JFrame {
         file f = new file();
         
         //insert the page
-        p.title = TitleTextBox.getText();
-        p.original_author = Integer.parseInt(UserIdTextBox.getText());
+        p.title = TitleTextBox.getText();        
         p.page_id = Db.InsertPage(p);
-                
-        
-        //create new userpage 
-        up.page_id = p.page_id ;
-        up.user_id = p.original_author ; 
-        Db.InsertUserPage(up);
+                                
         
         //create a new file
         //generate a random long string for file name
@@ -129,6 +123,7 @@ public class NewPage extends javax.swing.JFrame {
         //insert page file
         pf.page_id = p.page_id ;
         pf.file_id = f.file_id  ; 
+        pf.user_id = Integer.parseInt(UserIdTextBox.getText());
         Db.InsertPageFile(pf);
         
                 
@@ -148,9 +143,9 @@ public class NewPage extends javax.swing.JFrame {
         writer.println(title);
         writer.println("</h2>");
         
-        writer.println("<p>");
+        writer.println("<div>");
         writer.println(content);        
-        writer.println("</p>");
+        writer.println("</div>");
         writer.close();
         }catch(Exception e)
         {

@@ -11,7 +11,6 @@ package wiki;
  */
 public class page {
     public int page_id ; 
-    public String title; 
-    public int original_author ; 
+    public String title;  
     
 }

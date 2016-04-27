@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -56,7 +57,7 @@ public class DBManager
         {
             connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
             statement1 = connection1.createStatement();        
-            String query_string = "INSERT INTO page VALUES(NULL , ' " +  p.title + " ', " + p.original_author + ")";
+            String query_string = "INSERT INTO page VALUES(NULL , '" +  p.title + "')";
             System.out.println(query_string); 
             statement1.execute(query_string) ;
             System.out.println("page added"); 
@@ -130,7 +131,7 @@ public class DBManager
             int max_version ; 
             // get max version number
             connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
-            String select_string = "SELECT MAX(version_number) as max_version from page_file where page_file.page_id = 1 limit 1";
+            String select_string = "SELECT MAX(version_number) as max_version from page_file where page_file.page_id = "+pf.page_id+" limit 1";
             statement1 = connection1.createStatement();
             try
             {            
@@ -140,14 +141,14 @@ public class DBManager
                 {
                     //System.out.println(resultset1.getInt("page_id"));
                     max_version = resultset1.getInt("max_version") ;
-                    query_string = "INSERT INTO page_file VALUES (NULL , " +pf.page_id+ "," +pf.file_id+ "," +(max_version + 1)+ ")";
+                    query_string = "INSERT INTO page_file VALUES (NULL , " +pf.page_id+ "," +pf.file_id+ "," +(max_version + 1)+","+ pf.user_id+ ")";
                 }            
             }
             catch(Exception exp)
             {
                 System.out.println("exp");
                 //if it fails, there is no version, hence add the first o
-                query_string = "INSERT INTO page_file VALUES (NULL , " +pf.page_id+ "," +pf.file_id+ "," +1+ ")";
+                query_string = "INSERT INTO page_file VALUES (NULL , " +pf.page_id+ "," +pf.file_id+ "," +1+","+pf.user_id+ ")";
                 
             }
             statement1 = connection1.createStatement();
@@ -162,22 +163,21 @@ public class DBManager
         }
     }
     
-    public ArrayList<page> GetPage()
+    public ArrayList<page> GetPages()
     {
         try
         {
             ArrayList<page> pagelist= new ArrayList<page>();
             connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
-            String select_string = "SELECT MAX(page_id) AS page_id FROM page LIMIT 1";
+            String select_string = "SELECT * FROM page";
             statement1 = connection1.createStatement();
             resultset1 = statement1.executeQuery(select_string);
             while(resultset1.next())
             {
-                //System.out.println(resultset1.getInt("page_id"));
+                System.out.println(resultset1.getInt("page_id"));
                 page  p = new page();
                 p.page_id = resultset1.getInt("page_id");
-                p.title = resultset1.getString("title");
-                p.original_author = resultset1.getInt("original_author");
+                p.title = resultset1.getString("title");                
                 pagelist.add(p);
             }
             
@@ -192,4 +192,87 @@ public class DBManager
         
     }
         
+    public DefaultListModel<page> GetPagess()
+    {
+        try
+        {
+            DefaultListModel<page> pagelist= new DefaultListModel<page>();
+            connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
+            String select_string = "SELECT * FROM page";
+            statement1 = connection1.createStatement();
+            resultset1 = statement1.executeQuery(select_string);
+            while(resultset1.next())
+            {
+                System.out.println(resultset1.getInt("page_id"));
+                page  p = new page();
+                p.page_id = resultset1.getInt("page_id");
+                p.title = resultset1.getString("title");                
+                pagelist.addElement(p);
+            }
+            
+            return pagelist ;
+        }
+        catch(Exception e)
+        {
+            
+            System.out.println(e.getMessage());
+            return null ;
+        }
+        
+    }
+    
+    public ArrayList<file> GetPageFiles(page p)
+    {
+        try        
+        {
+            ArrayList<file> filelist= new ArrayList<file>();
+            connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
+            String select_string = "SELECT * FROM file a , page_file b where a.file_id = b.file_id and b.page_id = "+p.page_id;
+            
+            statement1 = connection1.createStatement();
+            resultset1 = statement1.executeQuery(select_string);
+            while(resultset1.next())
+            {
+                System.out.println(resultset1.getInt("file_id"));
+                file f = new file();
+                f.file_id = resultset1.getInt("file_id") ; 
+                f.file_name = resultset1.getString("file_name");
+                filelist.add(f);
+            }
+            
+            return filelist ;   
+        }
+        catch(Exception e)
+        {
+            return null ; 
+        }
+    }
+    
+    public ArrayList<user> GetPageUsers(page p)
+    {
+        try        
+        {
+            ArrayList<user> userlist= new ArrayList<user>();
+            connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
+            String select_string = "SELECT * FROM users a , page_file b where a.user_id = b.user_id and b.page_id = "+p.page_id;
+            
+            statement1 = connection1.createStatement();
+            resultset1 = statement1.executeQuery(select_string);
+            while(resultset1.next())
+            {
+                System.out.println(resultset1.getInt("user_id"));
+                user u = new user();
+                u.user_id = resultset1.getInt("user_id");
+                u.fname = resultset1.getString("fname");
+                u.lname = resultset1.getString("lname");
+                userlist.add(u);
+            }
+            
+            return userlist ;   
+        }
+        catch(Exception e)
+        {
+            return null ; 
+        }
+    }
 }
