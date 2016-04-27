@@ -5,6 +5,10 @@
  */
 package wiki;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.UUID;
+
 /**
  *
  * @author overmars
@@ -14,8 +18,11 @@ public class NewPage extends javax.swing.JFrame {
     /**
      * Creates new form NewPage
      */
+    private DBManager Db = new DBManager();
     public NewPage() {
         initComponents();
+        //WriteToFile();
+        
     }
 
     /**
@@ -94,22 +101,62 @@ public class NewPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         //get the details and create a new page and content
         
-        
+        //WriteToFile();
         ///create page 
         page p = new page();
         user_page up = new user_page();
-        page_file fp = new page_file();
+        page_file pf = new page_file();
         file f = new file();
         
-        
+        //insert the page
         p.title = TitleTextBox.getText();
         p.original_author = Integer.parseInt(UserIdTextBox.getText());
-        //insert the value         
+        p.page_id = Db.InsertPage(p);
+                
         
         //create new userpage 
+        up.page_id = p.page_id ;
+        up.user_id = p.original_author ; 
+        Db.InsertUserPage(up);
+        
+        //create a new file
+        //generate a random long string for file name
+        f.file_name =  UUID.randomUUID().toString();
+        f.file_id = Db.InsertFile(f);
+        //create the physical file
+        WriteToFile(f.file_name , p.title , ContentTextBox.getText());
+        
+        //insert page file
+        pf.page_id = p.page_id ;
+        pf.file_id = f.file_id  ; 
+        Db.InsertPageFile(pf);
+        
                 
     }//GEN-LAST:event_SaveButtonActionPerformed
 
+    private void WriteToFile(String uuid , String title , String content) 
+    {
+        try{
+            
+        PrintWriter writer = new PrintWriter("files/" +uuid +".html" , "UTF-8");
+        
+        writer.println("<head><title>");
+        writer.println(title);
+        writer.println("</title></head>");
+        
+        writer.println("<h2>");
+        writer.println(title);
+        writer.println("</h2>");
+        
+        writer.println("<p>");
+        writer.println(content);        
+        writer.println("</p>");
+        writer.close();
+        }catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
     /**
      * @param args the command line arguments
      */
