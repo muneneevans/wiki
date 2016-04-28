@@ -363,7 +363,7 @@ public class DBManager
         {
             connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
             statement1 = connection1.createStatement();        
-            String query_string = "UPDATE users SET fname = '"+u.fname+"' , lname = '"+u.lname+"' , passowrd = '"+u.password+"' , role_id = "+u.role_id+" WHERE user_id = "+u.user_id;
+            String query_string = "UPDATE users SET fname = '"+u.fname+"' , lname = '"+u.lname+"' , password = '"+u.password+"' , role_id = "+u.role_id+" WHERE user_id = "+u.user_id;
             System.out.println(query_string); 
             statement1.execute(query_string) ;
             System.out.println("user added"); 
