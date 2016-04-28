@@ -14,13 +14,48 @@ public class Menu extends javax.swing.JFrame {
     user currentuser = new user();
     public Menu() {
         initComponents();
+        
     }
     public void SetUser(user u)
     {
         currentuser = u ; 
-        System.out.println(u.fname );
+        System.out.println(u.role_id);
+        SetButtons();
     }
     
+    
+    public void SetButtons()
+    {
+        //disable all buttons
+        NewPageButton.setEnabled(false);
+        ManagePagesButton.setEnabled(false);
+        ManageUsersButton.setEnabled(false);
+        NewUserButton.setEnabled(false);
+        switch(currentuser.role_id)
+        {
+            case 1:
+                //is admin, can do anything                
+                NewPageButton.setEnabled(true);
+                ManagePagesButton.setEnabled(true);
+                ManageUsersButton.setEnabled(true);
+                NewUserButton.setEnabled(true);
+                break;
+            case 2:
+                //is teacher. cam read and edit pages
+                NewPageButton.setEnabled(true);
+                ManagePagesButton.setEnabled(true);                
+                break;
+            case 3:
+                //student reader, can only view pages                
+                ManagePagesButton.setEnabled(true);                
+                break;
+            case 4:
+                //student writer, can view and edit page
+                NewPageButton.setEnabled(true);
+                ManagePagesButton.setEnabled(true);                
+                break;
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -40,9 +75,19 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        ManagePagesButton.setText("Manage Pages");
+        ManagePagesButton.setText("View Pages");
+        ManagePagesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ManagePagesButtonActionPerformed(evt);
+            }
+        });
 
         NewUserButton.setText("New User");
+        NewUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewUserButtonActionPerformed(evt);
+            }
+        });
 
         ManageUsersButton.setText("Manage Users");
 
@@ -52,21 +97,22 @@ public class Menu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ManagePagesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(NewPageButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(NewUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ManageUsersButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(308, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(ManagePagesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(NewUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ManageUsersButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(NewPageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(310, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(NewPageButton)
-                .addGap(28, 28, 28)
+                .addGap(26, 26, 26)
                 .addComponent(ManagePagesButton)
-                .addGap(31, 31, 31)
+                .addGap(32, 32, 32)
+                .addComponent(NewPageButton)
+                .addGap(34, 34, 34)
                 .addComponent(NewUserButton)
                 .addGap(33, 33, 33)
                 .addComponent(ManageUsersButton)
@@ -78,7 +124,23 @@ public class Menu extends javax.swing.JFrame {
 
     private void NewPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewPageButtonActionPerformed
         // TODO add your handling code here:
+        NewPage Np = new NewPage();
+        Np.SetUser(currentuser);
+        Np.show();
+        this.dispose();
     }//GEN-LAST:event_NewPageButtonActionPerformed
+
+    private void ManagePagesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManagePagesButtonActionPerformed
+        // TODO add your handling code here:
+        ManagePages Mp = new ManagePages();
+        Mp.SetUser(currentuser);
+        Mp.show();
+        this.dispose();
+    }//GEN-LAST:event_ManagePagesButtonActionPerformed
+
+    private void NewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewUserButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NewUserButtonActionPerformed
 
     /**
      * @param args the command line arguments

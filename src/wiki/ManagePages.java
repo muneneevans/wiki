@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 public class ManagePages extends javax.swing.JFrame {
     
     private DBManager Db = new DBManager();
+    private user currentuser = new user();
     ArrayList<page> model = new ArrayList<page>();
     DefaultListModel<String> stringmodel = new DefaultListModel<String>();
     DefaultListModel<String> filestringmodel = new DefaultListModel<String>();
@@ -30,6 +31,11 @@ public class ManagePages extends javax.swing.JFrame {
     public ManagePages() {
         initComponents();
         SetListSource();
+    }
+    public void SetUser(user u)
+    {
+        currentuser = u ; 
+        System.out.println(u.role_id);     
     }
     private void SetListSource()
     {
