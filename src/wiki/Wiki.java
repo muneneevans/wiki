@@ -17,10 +17,9 @@ public class Wiki {
     public int id ; 
     public static void main(String[] args) {
         // TODO code application logic here
-        try{
-        DBManager Db = new DBManager();
-        }catch(Exception e)
-        {}
+        login L = new login();
+        L.show();
+        
     }
     
 }

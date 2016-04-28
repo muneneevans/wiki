@@ -36,6 +36,29 @@ public class ManagePages extends javax.swing.JFrame {
     {
         currentuser = u ; 
         System.out.println(u.role_id);     
+        SetButtons();
+    }
+    public void SetButtons()
+    {
+        EditPageButton.setEnabled(false);
+        switch(currentuser.role_id)
+        {
+            case 1:
+                //is admin, can do anything                
+                EditPageButton.setEnabled(true);
+                break;
+            case 2:
+                //is teacher. cam read and edit pages
+                EditPageButton.setEnabled(true);
+                break;
+            case 3:
+                //student reader, can only view pages                                
+                break;
+            case 4:
+                //student writer, can view and edit page
+                EditPageButton.setEnabled(true);
+                break;
+        }
     }
     private void SetListSource()
     {
@@ -66,11 +89,15 @@ public class ManagePages extends javax.swing.JFrame {
         FileListView = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         UserListView = new javax.swing.JList<>();
+        EditPageButton = new javax.swing.JButton();
+        FilesLabel = new javax.swing.JLabel();
+        UsersLabel = new javax.swing.JLabel();
+        PagesLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         PagesListView.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "item1", "item2", "item3" };
+            String[] strings = { "There are no pages available now", " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -82,7 +109,7 @@ public class ManagePages extends javax.swing.JFrame {
         jScrollPane1.setViewportView(PagesListView);
 
         FileListView.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "there are no files to show in this page" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -94,11 +121,24 @@ public class ManagePages extends javax.swing.JFrame {
         jScrollPane2.setViewportView(FileListView);
 
         UserListView.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "there are no users in this page" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane3.setViewportView(UserListView);
+
+        EditPageButton.setText("Edit Page");
+        EditPageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditPageButtonActionPerformed(evt);
+            }
+        });
+
+        FilesLabel.setText("Files in page");
+
+        UsersLabel.setText("Authors of files");
+
+        PagesLabel.setText("Pages");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,22 +146,38 @@ public class ManagePages extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EditPageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PagesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FilesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UsersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(FilesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UsersLabel)
+                    .addComponent(PagesLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane3))
-                .addContainerGap(116, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(EditPageButton)
+                .addContainerGap())
         );
 
         pack();
@@ -171,6 +227,20 @@ public class ManagePages extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_FileListViewValueChanged
 
+    private void EditPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditPageButtonActionPerformed
+        // TODO add your handling code here:
+        //get page and go edit it
+        EditPage Ep = new EditPage();
+        
+        // get the selected pagge
+        int id = PagesListView.getSelectedIndex();
+        page p = model.get(id );
+        
+        Ep.SetValues(p, currentuser);
+        Ep.show();
+        this.dispose();
+    }//GEN-LAST:event_EditPageButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,9 +277,13 @@ public class ManagePages extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton EditPageButton;
     private javax.swing.JList<String> FileListView;
+    private javax.swing.JLabel FilesLabel;
+    private javax.swing.JLabel PagesLabel;
     private javax.swing.JList<String> PagesListView;
     private javax.swing.JList<String> UserListView;
+    private javax.swing.JLabel UsersLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

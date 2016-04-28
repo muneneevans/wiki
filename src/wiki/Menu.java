@@ -5,6 +5,9 @@
  */
 package wiki;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author overmars
@@ -90,6 +93,11 @@ public class Menu extends javax.swing.JFrame {
         });
 
         ManageUsersButton.setText("Manage Users");
+        ManageUsersButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ManageUsersButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,8 +148,20 @@ public class Menu extends javax.swing.JFrame {
 
     private void NewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewUserButtonActionPerformed
         // TODO add your handling code here:
+        NewUser Nu = new NewUser();
+        Nu.SetUser(currentuser);
+        Nu.show();
+        this.dispose();
         
     }//GEN-LAST:event_NewUserButtonActionPerformed
+
+    private void ManageUsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageUsersButtonActionPerformed
+        // TODO add your handling code here:
+        UpdateUser Us = new UpdateUser();
+        Us.SetUser(currentuser);
+        Us.show();
+        this.dispose();
+    }//GEN-LAST:event_ManageUsersButtonActionPerformed
 
     /**
      * @param args the command line arguments
