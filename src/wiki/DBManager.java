@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -227,7 +228,7 @@ public class DBManager
         {
             ArrayList<file> filelist= new ArrayList<file>();
             connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
-            String select_string = "SELECT * FROM file a , page_file b where a.file_id = b.file_id and b.page_id = "+p.page_id;
+            String select_string = "SELECT * FROM file a , page_file b where a.file_id = b.file_id and b.page_id = "+p.page_id+" ORDER BY version_number DESC";
             
             statement1 = connection1.createStatement();
             resultset1 = statement1.executeQuery(select_string);
@@ -254,7 +255,7 @@ public class DBManager
         {
             ArrayList<user> userlist= new ArrayList<user>();
             connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
-            String select_string = "SELECT * FROM users a , page_file b where a.user_id = b.user_id and b.page_id = "+p.page_id;
+            String select_string = "SELECT * FROM users a , page_file b where a.user_id = b.user_id and b.page_id = "+p.page_id +" ORDER BY version_number DESC";
             
             statement1 = connection1.createStatement();
             resultset1 = statement1.executeQuery(select_string);
@@ -273,6 +274,69 @@ public class DBManager
         catch(Exception e)
         {
             return null ; 
+        }
+    }
+    
+    public boolean ValidateUser(user u )
+    {
+        try
+        {
+            
+            connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
+            String select_string = "SELECT * FROM `users` WHERE user_id = "+u.user_id+" and password = '"+ u.password + "' limit 1";
+            statement1 = connection1.createStatement();
+            try
+            {
+                resultset1 = statement1.executeQuery(select_string);
+                int count = 0 ; 
+                if(resultset1.next())
+                {                 
+                    count += resultset1.getInt("user_id");
+                    System.out.println(count);
+                    return true ;
+                }
+                else
+                {                
+                    return false;
+                }
+            }catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+                return false ; 
+            }
+            
+        }
+        catch(Exception e)
+        {
+            return false ;
+        }
+    }
+    
+    public user GetUser(user u )
+    {
+        try
+        {
+            connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
+            String select_string = "SELECT * FROM `users` WHERE user_id = "+u.user_id+" limit 1";
+            statement1 = connection1.createStatement();
+            resultset1 = statement1.executeQuery(select_string);            
+            while(resultset1.next())
+            {                 
+                u = new  user() ; 
+                u.user_id = resultset1.getInt("user_id");
+                u.fname = resultset1.getString("fname");
+                u.lname = resultset1.getString("lname");
+                u.role_id = resultset1.getInt("role_id");
+                u.password = resultset1.getString("password");
+                
+                return u ; 
+
+            }
+            return null ;
+        }
+        catch(Exception e )
+        {
+            return null;
         }
     }
 }

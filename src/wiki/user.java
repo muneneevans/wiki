@@ -14,4 +14,5 @@ public class user {
     public String fname ; 
     public String lname ; 
     public int role_id ; 
+    public String password;
 }
