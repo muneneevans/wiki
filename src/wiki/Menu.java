@@ -140,6 +140,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void NewUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewUserButtonActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_NewUserButtonActionPerformed
 
     /**

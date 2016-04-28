@@ -339,4 +339,39 @@ public class DBManager
             return null;
         }
     }
+    
+    public void InsertUser(user u )
+    {
+         try
+        {
+            connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
+            statement1 = connection1.createStatement();        
+            String query_string = "INSERT INTO users values(Null , '" +u.fname+ "','" +u.lname+ "','"+u.password+"'," + u.role_id+")";
+            System.out.println(query_string); 
+            statement1.execute(query_string) ;
+            System.out.println("user added"); 
+        }            
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());          
+        }
+    }
+    
+    public void UpdateUser(user u )
+    {
+         try
+        {
+            connection1 = DriverManager.getConnection(DB_URL, USER, PASS);
+            statement1 = connection1.createStatement();        
+            String query_string = "UPDATE users SET fname = '"+u.fname+"' , lname = '"+u.lname+"' , passowrd = '"+u.password+"' , role_id = "+u.role_id+" WHERE user_id = "+u.user_id;
+            System.out.println(query_string); 
+            statement1.execute(query_string) ;
+            System.out.println("user added"); 
+        }            
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());          
+        }
+    }
+    
 }
