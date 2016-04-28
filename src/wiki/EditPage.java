@@ -67,6 +67,7 @@ public class EditPage extends javax.swing.JFrame {
         SaveButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         ContentTextBox = new javax.swing.JTextPane();
+        BackButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,6 +82,13 @@ public class EditPage extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(ContentTextBox);
 
+        BackButton.setText("Back");
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,7 +97,10 @@ public class EditPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ContentLabel)
-                    .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BackButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
@@ -101,7 +112,9 @@ public class EditPage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(SaveButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SaveButton)
+                    .addComponent(BackButton))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
@@ -125,6 +138,15 @@ public class EditPage extends javax.swing.JFrame {
         pf.user_id = currentuser.user_id;
         Db.InsertPageFile(pf);
     }//GEN-LAST:event_SaveButtonActionPerformed
+
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
+        // TODO add your handling code here:
+        //go to the manage folders page
+        ManagePages Mp = new ManagePages();
+        Mp.SetUser(currentuser);
+        Mp.show();
+        this.dispose();
+    }//GEN-LAST:event_BackButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,6 +184,7 @@ public class EditPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackButton;
     private javax.swing.JLabel ContentLabel;
     private javax.swing.JTextPane ContentTextBox;
     private javax.swing.JButton SaveButton;

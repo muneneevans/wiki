@@ -39,6 +39,7 @@ public class NewPage extends javax.swing.JFrame {
         ContentLabel = new javax.swing.JLabel();
         SaveButton = new javax.swing.JButton();
         UserIdTextBox = new javax.swing.JTextField();
+        BackButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +58,13 @@ public class NewPage extends javax.swing.JFrame {
             }
         });
 
+        BackButton.setText("Back");
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,7 +80,10 @@ public class NewPage extends javax.swing.JFrame {
                         .addGap(98, 98, 98)
                         .addComponent(UserIdTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(ContentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SaveButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -88,7 +99,9 @@ public class NewPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(SaveButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SaveButton)
+                    .addComponent(BackButton))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -126,6 +139,14 @@ public class NewPage extends javax.swing.JFrame {
         
                 
     }//GEN-LAST:event_SaveButtonActionPerformed
+
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
+        // TODO add your handling code here:
+            Menu mn = new Menu();   
+            mn.SetUser(currentuser);
+            mn.show();
+            this.dispose();
+    }//GEN-LAST:event_BackButtonActionPerformed
 
     private void WriteToFile(String uuid , String title , String content) 
     {
@@ -186,6 +207,7 @@ public class NewPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackButton;
     private javax.swing.JLabel ContentLabel;
     private javax.swing.JTextArea ContentTextBox;
     private javax.swing.JButton SaveButton;

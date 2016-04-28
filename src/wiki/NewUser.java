@@ -35,6 +35,7 @@ public class NewUser extends javax.swing.JFrame {
         RoleComboBox = new javax.swing.JComboBox<>();
         SaveButton = new javax.swing.JButton();
         PasswordTextBox = new javax.swing.JPasswordField();
+        BackButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,13 +58,20 @@ public class NewUser extends javax.swing.JFrame {
 
         PasswordTextBox.setText("jPasswordField1");
 
+        BackButton.setText("Back");
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(FNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
@@ -80,7 +88,10 @@ public class NewUser extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(RoleComboBox, 0, 135, Short.MAX_VALUE)
                             .addComponent(PasswordTextBox)))
-                    .addComponent(SaveButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(BackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(146, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -103,7 +114,9 @@ public class NewUser extends javax.swing.JFrame {
                     .addComponent(RoleLabel)
                     .addComponent(RoleComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
-                .addComponent(SaveButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SaveButton)
+                    .addComponent(BackButton))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
 
@@ -123,6 +136,14 @@ public class NewUser extends javax.swing.JFrame {
         Db.InsertUser(u);
         
     }//GEN-LAST:event_SaveButtonActionPerformed
+
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
+        // TODO add your handling code here:
+            Menu mn = new Menu();
+            mn.SetUser(currentuser);
+            mn.show();
+            this.dispose();
+    }//GEN-LAST:event_BackButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,6 +181,7 @@ public class NewUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackButton;
     private javax.swing.JLabel FNameLabel;
     private javax.swing.JTextField FNameTextBox;
     private javax.swing.JLabel LNameLabel;
@@ -169,7 +191,5 @@ public class NewUser extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> RoleComboBox;
     private javax.swing.JLabel RoleLabel;
     private javax.swing.JButton SaveButton;
-    private javax.swing.JTextField txttype;
-    private javax.swing.JTextField txttype1;
     // End of variables declaration//GEN-END:variables
 }
